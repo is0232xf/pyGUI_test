@@ -5,11 +5,13 @@ Created on Tue Oct  8 19:21:36 2019
 @author: FujiiChang
 """
 
+import os
 import tkinter
 from tkinter import ttk
 from tkinter import filedialog
 from tkinter import messagebox
-import merge_pdf
+import make_a_word_list
+import search_on_weblio
 
 def ask_folder():
     # ref button action
@@ -19,29 +21,43 @@ def ask_folder():
 
 def app():
     # OK button action
-    is_reverse = order_comb.get() == "descending"
+    input_file = []
+    is_reverse = order_comb.get()
     input_dir = folder_path.get()
     # select pdf file name(save as ...)
-    output_file = filedialog.asksaveasfilename(
-        filetypes=[("PDF files", "*.pdf")], defaultextension=".pdf"
+    path = filedialog.asksaveasfilename(
+        filetypes=[("text", "*.txt")], defaultextension=".txt"
     )
-    if not input_dir or not output_file:
+    
+    if not input_dir or not path:
         return
     # execute
-    merge_pdf.merge_pdf_files(input_dir, output_file, is_reverse)
+    for file in os.listdir(input_dir):
+        input_file.append(file)
+    word_list = make_a_word_list.make_list(input_dir, input_file)
+    result = search_on_weblio.search_on_weblio(word_list)
+    
+    output_file = open(path, "w")
+    for word in result:
+        line = str(word[0])+", " + str(word[1]) + ", " + str(word[2]) + "\n"
+        b = line.encode('cp932', 'ignore')
+        trans_txt = b.decode('cp932')
+        output_file.write(trans_txt)
+    output_file.close()
+        
     # message box
-    messagebox.showinfo("Finish")
+    messagebox.showinfo("Finish", "Finish join")
 
-folder_path = tkinter.StringVar()
 # main window
 main_win = tkinter.Tk()
 main_win.title("En-to-Ja Word minner")
 main_win.geometry("500x120")
 
-# main frame
+# main framel
 main_frm = ttk.Frame(main_win)
 main_frm.grid(column=0, row=0, sticky=tkinter.NSEW, padx=5, pady=10)
 
+folder_path = tkinter.StringVar()
 # widget(folder path)
 folder_label = ttk.Label(main_frm, text="Path")
 folder_box = ttk.Entry(main_frm, textvariable=folder_path)
