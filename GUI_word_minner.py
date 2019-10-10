@@ -35,22 +35,12 @@ def app():
         return
     
     input_dir = folder_path.get()
-    # select pdf file name(save as ...)
-    """
-    path = filedialog.asksaveasfilename(
-        filetypes=[("text", "*.txt")], defaultextension=".txt"
-    )
-    
-    if not input_dir or not path:
-        return
-    """
     # execute
     for file in os.listdir(input_dir):
         input_file.append(file)
         
     path2 = filedialog.asksaveasfilename(
-        filetypes=[("text", "*.txt")], title="Save as", defaultextension=".txt"
-    )
+        filetypes=[("text", "*.txt")], title="Save as", defaultextension=".txt")
     
     word_list = make_a_word_list.make_list(input_dir, input_file)
     result = search_on_weblio.search_on_weblio(word_list, int(min_level), int(max_level), sort)
