@@ -7,7 +7,6 @@ Created on Tue Oct  8 21:09:41 2019
 
 
 import nltk
-import os
 from nltk.corpus import wordnet as wn
 
 nltk.download('all')
@@ -22,6 +21,7 @@ def exclude_special_characters(data_lines):
     data_lines = data_lines.replace("-", "")
     data_lines = data_lines.replace("-\n", "")
     data_lines = data_lines.replace("\n", " ")
+    data_lines = data_lines.replace(" ", "")    
     data_lines = data_lines.replace(",", "")
     data_lines = data_lines.replace(".", "")
     data_lines = data_lines.replace("(", "")
@@ -45,7 +45,6 @@ def make_list(text_dir, input_file):
     
     for input_text in input_file:
         path = text_dir + "/" + input_text
-        print("path: ", path)
         with open(path, "r") as myfile:
             data=myfile.read()
             data = data.split('. ')

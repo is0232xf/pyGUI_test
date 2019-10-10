@@ -22,22 +22,37 @@ def ask_folder():
 def app():
     # OK button action
     input_file = []
-    is_reverse = order_comb.get()
+    max_level = int(order_maxlevel.get())
+    min_level = int(order_minlevel.get())
+    print("min: ", min_level)
+    print("max: ", max_level)
+    
+    if min_level > max_level:
+        messagebox.showinfo("Error", "min level > max level")
+        return
+    
     input_dir = folder_path.get()
     # select pdf file name(save as ...)
+    """
     path = filedialog.asksaveasfilename(
         filetypes=[("text", "*.txt")], defaultextension=".txt"
     )
     
     if not input_dir or not path:
         return
+    """
     # execute
     for file in os.listdir(input_dir):
         input_file.append(file)
-    word_list = make_a_word_list.make_list(input_dir, input_file)
-    result = search_on_weblio.search_on_weblio(word_list)
+        
+    path2 = filedialog.asksaveasfilename(
+        filetypes=[("text", "*.txt")], title="Save as", defaultextension=".txt"
+    )
     
-    output_file = open(path, "w")
+    word_list = make_a_word_list.make_list(input_dir, input_file)
+    result = search_on_weblio.search_on_weblio(word_list, int(min_level), int(max_level))
+    
+    output_file = open(path2, "w")
     for word in result:
         line = str(word[0])+", " + str(word[1]) + ", " + str(word[2]) + "\n"
         b = line.encode('cp932', 'ignore')
@@ -51,7 +66,7 @@ def app():
 # main window
 main_win = tkinter.Tk()
 main_win.title("En-to-Ja Word minner")
-main_win.geometry("500x120")
+main_win.geometry("500x130")
 
 # main framel
 main_frm = ttk.Frame(main_win)
@@ -64,9 +79,14 @@ folder_box = ttk.Entry(main_frm, textvariable=folder_path)
 folder_btn = ttk.Button(main_frm, text="Ref", command=ask_folder)
 
 # widget(allignment sequence)
-order_label = ttk.Label(main_frm, text="Sequence")
-order_comb = ttk.Combobox(main_frm, values=["Ascending", "Descending"], width=10)
-order_comb.current(0)
+value = list(range(20))
+order_maxlabel = ttk.Label(main_frm, text="max level")
+order_maxlevel = ttk.Combobox(main_frm, values=value, width=10)
+order_maxlevel.current(0)
+
+order_minlabel = ttk.Label(main_frm, text="min level")
+order_minlevel = ttk.Combobox(main_frm, values=value, width=10)
+order_minlevel.current(0)
 
 # widget（execute button）
 app_btn = ttk.Button(main_frm, text="OK", command=app)
@@ -75,9 +95,11 @@ app_btn = ttk.Button(main_frm, text="OK", command=app)
 folder_label.grid(column=0, row=0, pady=10)
 folder_box.grid(column=1, row=0, sticky=tkinter.EW, padx=5)
 folder_btn.grid(column=2, row=0)
-order_label.grid(column=0, row=1)
-order_comb.grid(column=1, row=1, sticky=tkinter.W, padx=5)
-app_btn.grid(column=1, row=2)
+order_maxlabel.grid(column=0, row=1)
+order_maxlevel.grid(column=1, row=1, sticky=tkinter.W, padx=5)
+order_minlabel.grid(column=0, row=2)
+order_minlevel.grid(column=1, row=2, sticky=tkinter.W, padx=5)
+app_btn.grid(column=1, row=3)
 
 # set up cinfiguration
 main_win.columnconfigure(0, weight=1)
