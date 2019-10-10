@@ -7,8 +7,9 @@ Created on Tue Oct  8 21:07:24 2019
 
 import requests
 from bs4 import BeautifulSoup
+from operator import itemgetter
 
-def search_on_weblio(search_words, min_level, max_level):
+def search_on_weblio(search_words, min_level, max_level, sort):
     result_list = []
     for word in search_words:
         # make url of each search word
@@ -32,10 +33,11 @@ def search_on_weblio(search_words, min_level, max_level):
             word_level = int(word_level.text)
     
         result_set = (word, mean_text, word_level)
-        print("w_level: ", result_set[2])
+        print("min: ", min_level)
+        print("max: ", max_level)
+        print("wrd: ", result_set[2])
         if min_level <= result_set[2] <= max_level:
-            print(result_set)
             result_list.append(result_set)
-        else:
-            print("different level")
+    if sort is True:
+        result_list = sorted(result_list, key=itemgetter(2))
     return(result_list)

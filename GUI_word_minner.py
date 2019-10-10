@@ -24,8 +24,11 @@ def app():
     input_file = []
     max_level = int(order_maxlevel.get())
     min_level = int(order_minlevel.get())
-    print("min: ", min_level)
-    print("max: ", max_level)
+    check = bln.get()
+    sort = True
+    
+    if check is False:
+        sort = True
     
     if min_level > max_level:
         messagebox.showinfo("Error", "min level > max level")
@@ -50,7 +53,7 @@ def app():
     )
     
     word_list = make_a_word_list.make_list(input_dir, input_file)
-    result = search_on_weblio.search_on_weblio(word_list, int(min_level), int(max_level))
+    result = search_on_weblio.search_on_weblio(word_list, int(min_level), int(max_level), sort)
     
     output_file = open(path2, "w")
     for word in result:
@@ -78,15 +81,20 @@ folder_label = ttk.Label(main_frm, text="Path")
 folder_box = ttk.Entry(main_frm, textvariable=folder_path)
 folder_btn = ttk.Button(main_frm, text="Ref", command=ask_folder)
 
-# widget(allignment sequence)
+# widget(select level(max))
 value = list(range(20))
 order_maxlabel = ttk.Label(main_frm, text="max level")
 order_maxlevel = ttk.Combobox(main_frm, values=value, width=10)
 order_maxlevel.current(0)
 
+# widget(select level(min))
 order_minlabel = ttk.Label(main_frm, text="min level")
 order_minlevel = ttk.Combobox(main_frm, values=value, width=10)
 order_minlevel.current(0)
+
+bln = tkinter.BooleanVar()
+bln.set(True)
+check_box = tkinter.Checkbutton(main_frm, variable=bln, text="Sort")
 
 # widget（execute button）
 app_btn = ttk.Button(main_frm, text="OK", command=app)
@@ -95,10 +103,11 @@ app_btn = ttk.Button(main_frm, text="OK", command=app)
 folder_label.grid(column=0, row=0, pady=10)
 folder_box.grid(column=1, row=0, sticky=tkinter.EW, padx=5)
 folder_btn.grid(column=2, row=0)
-order_maxlabel.grid(column=0, row=1)
-order_maxlevel.grid(column=1, row=1, sticky=tkinter.W, padx=5)
-order_minlabel.grid(column=0, row=2)
-order_minlevel.grid(column=1, row=2, sticky=tkinter.W, padx=5)
+order_minlabel.grid(column=0, row=1)
+order_minlevel.grid(column=1, row=1, sticky=tkinter.W, padx=5)
+order_maxlabel.grid(column=0, row=2)
+order_maxlevel.grid(column=1, row=2, sticky=tkinter.W, padx=5)
+check_box.grid(column=0, row=3)
 app_btn.grid(column=1, row=3)
 
 # set up cinfiguration
