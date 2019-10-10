@@ -28,7 +28,7 @@ def app():
     sort = True
     
     if check is False:
-        sort = True
+        sort = False
     
     if min_level > max_level:
         messagebox.showinfo("Error", "min level > max level")
