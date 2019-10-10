@@ -7,11 +7,11 @@ Created on Tue Oct  8 19:21:36 2019
 
 import os
 import tkinter
+import make_a_word_list
+import search_on_weblio
 from tkinter import ttk
 from tkinter import filedialog
 from tkinter import messagebox
-import make_a_word_list
-import search_on_weblio
 
 def ask_folder():
     # ref button action

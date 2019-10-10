@@ -6,12 +6,13 @@ Created on Tue Oct  8 21:07:24 2019
 """
 
 import requests
+from tqdm import tqdm
 from bs4 import BeautifulSoup
 from operator import itemgetter
 
 def search_on_weblio(search_words, min_level, max_level, sort):
     result_list = []
-    for word in search_words:
+    for word in tqdm(search_words):
         # make url of each search word
         url = "https://ejje.weblio.jp/content/" + word 
         # send request to url
@@ -33,9 +34,6 @@ def search_on_weblio(search_words, min_level, max_level, sort):
             word_level = int(word_level.text)
     
         result_set = (word, mean_text, word_level)
-        print("min: ", min_level)
-        print("max: ", max_level)
-        print("wrd: ", result_set[2])
         if min_level <= result_set[2] <= max_level:
             result_list.append(result_set)
     if sort is True:
