@@ -72,7 +72,7 @@ folder_box = ttk.Entry(main_frm, textvariable=folder_path)
 folder_btn = ttk.Button(main_frm, text="Ref", command=ask_folder)
 
 # widget(select level(max))
-value = list(range(20))
+value = list(range(30))
 order_maxlabel = ttk.Label(main_frm, text="max level")
 order_maxlevel = ttk.Combobox(main_frm, values=value, width=10)
 order_maxlevel.current(0)
