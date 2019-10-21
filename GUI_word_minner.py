@@ -54,7 +54,7 @@ def app():
     output_file.close()
         
     # message box
-    messagebox.showinfo("Finish", "Finish join")
+    messagebox.showinfo("Finish", "Finish making word list")
 
 # main window
 main_win = tkinter.Tk()
