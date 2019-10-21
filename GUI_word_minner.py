@@ -59,7 +59,7 @@ def app():
 # main window
 main_win = tkinter.Tk()
 main_win.title("En-to-Ja Word minner")
-main_win.geometry("500x130")
+main_win.geometry("500x140")
 
 # main framel
 main_frm = ttk.Frame(main_win)
