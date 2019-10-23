@@ -25,6 +25,8 @@ def search_on_weblio(search_words, min_level, max_level, sort):
             mean_text = "None"
         else:
             mean_text = mean_text.text
+            mean_text = mean_text.replace("主な意味", " ")
+            print(mean_text)
         
         # if there is no word levcel on weblio, the level of word is assigned level 99
         word_level = (soup.find("span", class_="learning-level-content"))

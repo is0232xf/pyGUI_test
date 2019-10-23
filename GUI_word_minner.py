@@ -54,12 +54,12 @@ def app():
     output_file.close()
         
     # message box
-    messagebox.showinfo("Finish", "Finish join")
+    messagebox.showinfo("Finish", "Finish making word list")
 
 # main window
 main_win = tkinter.Tk()
 main_win.title("En-to-Ja Word minner")
-main_win.geometry("500x130")
+main_win.geometry("500x140")
 
 # main framel
 main_frm = ttk.Frame(main_win)
@@ -72,7 +72,7 @@ folder_box = ttk.Entry(main_frm, textvariable=folder_path)
 folder_btn = ttk.Button(main_frm, text="Ref", command=ask_folder)
 
 # widget(select level(max))
-value = list(range(20))
+value = list(range(30))
 order_maxlabel = ttk.Label(main_frm, text="max level")
 order_maxlevel = ttk.Combobox(main_frm, values=value, width=10)
 order_maxlevel.current(0)
